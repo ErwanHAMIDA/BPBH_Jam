@@ -29,7 +29,7 @@ public class S_SnapZone : MonoBehaviour
                 Debug.Log("stop !");
             }
 
-            parent.Snap(index, other.transform);
+            parent.Snap(index, other.transform, snapPoint);
         }
     }
 

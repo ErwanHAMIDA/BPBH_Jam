@@ -19,14 +19,18 @@ public class S_SnapSentence : MonoBehaviour
 
             zone.transform.SetParent(transform);
             zone.transform.localRotation = Quaternion.identity;
+            zone.transform.localScale = new Vector3(_originalBoxCollider.size.x, _originalBoxCollider.size.y, _originalBoxCollider.size.z);
 
             // Trust ez Math
+            
             float offsetX = -_originalBoxCollider.size.x / 2 + pieceSize.x / 2 + i * pieceSize.x;
 
-            Vector3 localPos = new Vector3(_originalBoxCollider.center.x + offsetX, _originalBoxCollider.center.y, _originalBoxCollider.center.z);
-
+            Vector3 localPos = new Vector3(offsetX, _originalBoxCollider.center.y, _originalBoxCollider.center.z);
             zone.transform.localPosition = localPos;
-            _snapPoints.Add(new Vector3(0,0,0)); //to change for snapPoints center
+
+            _snapPoints.Add(new Vector3(offsetX + zone.transform.localPosition.x + zone.transform.localScale.x / 2,
+                zone.transform.localPosition.y + zone.transform.localScale.y / 2,
+                zone.transform.localPosition.z + zone.transform.localScale.z / 2)); //to change for snapPoints center
 
             BoxCollider box = zone.AddComponent<BoxCollider>();
             box.size = pieceSize;
@@ -37,9 +41,9 @@ public class S_SnapSentence : MonoBehaviour
         }
     }
 
-    public void Snap(int index, Transform sentence)
+    public void Snap(int index, Transform sentence, Vector3 snapPoint)
     {
-        sentence.position = _snapPoints[index];
+        sentence.position = snapPoint;
 
         //check the sentence here
     }
