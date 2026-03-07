@@ -9,23 +9,43 @@ public class S_SkillManager : MonoBehaviour
     // Ajouter ici les futures compétences :
 
 
+    private int skillUnlocked = 0;
+
     public bool HasPush => _hasPush;
     public bool HasJump => _hasJump;
     public bool HasClimb => _hasClimb;
 
-    public void UnlockPush()
+    public void UnlockSkill()
+    {
+        switch (skillUnlocked)
+        {
+            case 0:
+                UnlockPushRock();
+                break;
+            case 1:
+                UnlockJump();
+                break;
+            case 2:
+                UnlockClimb();
+                break;
+        }
+
+        skillUnlocked++;
+    }
+
+    private void UnlockPushRock()
     {
         _hasPush = true;
         Debug.Log("[SkillManager] Compétence POUSSER débloquée !");
     }
 
-    public void UnlockJump()
+    private void UnlockJump()
     {
         _hasJump = true;
         Debug.Log("[SkillManager] Compétence SAUT débloquée !");
     }
 
-    public void UnlockClimb()
+    private void UnlockClimb()
     {
         _hasClimb = true;
         Debug.Log("[SkillManager] Compétence ESCALADE débloquée !");
