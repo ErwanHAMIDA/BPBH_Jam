@@ -3,13 +3,22 @@ using UnityEngine;
 public class S_SkillManager : MonoBehaviour
 {
     [Header("Compétences débloquées")]
+    [SerializeField] private bool _hasPush = false;
     [SerializeField] private bool _hasJump = false;
     [SerializeField] private bool _hasClimb = false;
     // Ajouter ici les futures compétences :
 
 
+    public bool HasPush => _hasPush;
     public bool HasJump => _hasJump;
     public bool HasClimb => _hasClimb;
+
+    public void UnlockPush()
+    {
+        _hasPush = true;
+        Debug.Log("[SkillManager] Compétence POUSSER débloquée !");
+    }
+
     public void UnlockJump()
     {
         _hasJump = true;

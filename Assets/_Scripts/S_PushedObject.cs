@@ -4,9 +4,12 @@ public class S_PushedObject : MonoBehaviour
 {
     [Range(1.0f, 100.0f)]
     [SerializeField] float _pushForce = 1.0f;
+    [SerializeField] S_SkillManager _skill;
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
+        if (_skill.HasPush == false) return;
+
         Rigidbody rigidbody = hit.collider.attachedRigidbody;
 
         if (rigidbody == null || rigidbody.isKinematic)

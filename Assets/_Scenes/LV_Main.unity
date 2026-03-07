@@ -1764,6 +1764,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pushForce: 10
+  _skill: {fileID: 624255008}
 --- !u!143 &624255007
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1784,7 +1785,7 @@ CharacterController:
   serializedVersion: 3
   m_Height: 1
   m_Radius: 0.5
-  m_SlopeLimit: 45
+  m_SlopeLimit: 25
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
@@ -1801,8 +1802,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bcffc6455db23b44869ce15aa611aad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hasJump: 1
-  _hasClimb: 1
+  _hasPush: 0
+  _hasJump: 0
+  _hasClimb: 0
 --- !u!114 &624255009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1817,6 +1819,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _jumpArcHeight: 1.8
   _jumpDuration: 0.45
+  _skill: {fileID: 624255008}
 --- !u!114 &624255010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1833,6 +1836,7 @@ MonoBehaviour:
   _climbDistance: 2
   _climbAngle: 75
   _climbCurve: 0.5
+  _skill: {fileID: 624255008}
 --- !u!1001 &629617177
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2731,7 +2735,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 875737592}
   serializedVersion: 5
-  m_Mass: 80
+  m_Mass: 60
   m_LinearDamping: 2
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}

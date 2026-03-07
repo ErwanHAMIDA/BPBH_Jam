@@ -26,6 +26,8 @@ public class S_Climb : MonoBehaviour
     [Range(0f, 1f)]
     [SerializeField] float _climbCurve = 0.5f;
 
+    [SerializeField] S_SkillManager _skill;
+
 
     private CharacterController _controller;
     private S_Movement _movement;
@@ -41,7 +43,7 @@ public class S_Climb : MonoBehaviour
 
     public void TriggerClimb(Vector3 wallNormal, Transform landingPoint = null)
     {
-        if (_isClimbing) return;
+        if (_isClimbing || _skill.HasClimb == false) return;
 
         Vector3 destination;
 

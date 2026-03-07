@@ -11,6 +11,8 @@ public class S_Jump : MonoBehaviour
     [Tooltip("Durée du saut en secondes")]
     [SerializeField] float _jumpDuration = 0.45f;
 
+    [SerializeField] S_SkillManager _skill;
+
     private CharacterController _controller;
     private S_Movement _movement;
     private bool _isJumping = false;
@@ -25,7 +27,7 @@ public class S_Jump : MonoBehaviour
 
     public void TriggerJump(Vector3 landingPoint)
     {
-        if (_isJumping) return;
+        if (_isJumping || _skill.HasJump == false) return;
         StartCoroutine(JumpArc(landingPoint));
     }
 
