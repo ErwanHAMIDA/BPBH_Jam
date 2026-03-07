@@ -16,6 +16,7 @@ public class SO_Word : ScriptableObject
     [Tooltip("What text will be printed")]
     [SerializeField] string word = default;
 
+
     public string GetWord()
     {
         return word;

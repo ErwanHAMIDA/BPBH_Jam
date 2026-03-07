@@ -7,10 +7,16 @@ public class S_SnapSentence : MonoBehaviour
     [SerializeField] private List<SO_Word> expectedWords;
 
     [Range(0.1f, 4.0f)]
-    [SerializeField] private float snapRadius = 1.0f;
+    [SerializeField] private float _snapRadius = 1.0f;
 
     [Range(0.001f, 4.0f)]
-    [SerializeField] private float releaseRadius = 1.2f;
+    [SerializeField] private float _releaseRadius = 1.2f;
+
+    [Range(10.0f, 4000.0f)]
+    [SerializeField] private float _velocityLimitIn = 25.0f;
+
+    [Range(0.001f, 4.0f)]
+    [SerializeField] private float _velocityLimitOut = 0.01f;
 
     private SO_Word[] currentWords;
 
@@ -39,21 +45,25 @@ public class S_SnapSentence : MonoBehaviour
         if (snappedZone != null)
         {
             float dist = Vector3.Distance(word.transform.position, snappedZone.transform.position);
+            Rigidbody rb = word.GetComponent<Rigidbody>();
 
-            if (dist > releaseRadius)
+            if (dist > _releaseRadius)
             {
                 ReleaseWord(word, snappedZone);
             }
             else
             {
-                Rigidbody rb = word.GetComponent<Rigidbody>();
-                if (rb != null)
+                if (rb != null && rb.linearVelocity.magnitude < _velocityLimitOut)
                 {
                     rb.linearVelocity = Vector3.zero;
                     rb.angularVelocity = Vector3.zero;
-                }
 
-                word.transform.position = Vector3.Lerp(word.transform.position, snappedZone.transform.position, 0.2f);
+                    word.transform.position = Vector3.Lerp(
+                        word.transform.position,
+                        snappedZone.transform.position,
+                        0.2f
+                    );
+                }
             }
 
             return;
@@ -66,7 +76,7 @@ public class S_SnapSentence : MonoBehaviour
             if (zone.IsOccupied) continue;
 
             float dist = Vector3.Distance(word.transform.position, zone.transform.position);
-            if (dist < minDist && dist <= snapRadius)
+            if (dist < minDist && dist <= _snapRadius)
             {
                 minDist = dist;
                 closest = zone;
@@ -75,11 +85,16 @@ public class S_SnapSentence : MonoBehaviour
 
         if (closest != null)
         {
-            word.transform.position = Vector3.Lerp(word.transform.position, closest.transform.position, 0.2f);
-
             Rigidbody rb = word.GetComponent<Rigidbody>();
-            if (rb != null)
+
+            if (rb != null && rb.linearVelocity.magnitude < _velocityLimitIn)
             {
+                word.transform.position = Vector3.Lerp(
+                    word.transform.position,
+                    closest.transform.position,
+                    0.2f
+                );
+
                 rb.linearVelocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
             }
@@ -101,7 +116,7 @@ public class S_SnapSentence : MonoBehaviour
         {
             if (zone == null) continue;
 
-            Gizmos.DrawSphere(zone.transform.position, snapRadius);
+            Gizmos.DrawSphere(zone.transform.position, _snapRadius);
         }
     }
 
