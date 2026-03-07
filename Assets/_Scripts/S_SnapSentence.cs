@@ -3,48 +3,126 @@ using UnityEngine;
 
 public class S_SnapSentence : MonoBehaviour
 {
-    [SerializeField] int _piecesNumber;
-    [SerializeField] BoxCollider _originalBoxCollider;
+    [SerializeField] private List<S_SnapZone> snapZones;
+    [SerializeField] private List<SO_Word> expectedWords;
 
-    private List<Vector3> _snapPoints = new();
+    [Range(0.1f, 4.0f)]
+    [SerializeField] private float snapRadius = 1.0f;
 
-    private void Start()
+    [Range(0.001f, 4.0f)]
+    [SerializeField] private float releaseRadius = 1.2f;
+
+    private SO_Word[] currentWords;
+
+    private void Awake()
     {
-        Vector3 pieceSize = _originalBoxCollider.size;
-        pieceSize.x /= _piecesNumber;
+        if (snapZones.Count != expectedWords.Count)
+            Debug.LogError("Le nombre de zones et de mots attendus doit correspondre !");
 
-        for (int i = 0; i < _piecesNumber; i++)
+        currentWords = new SO_Word[snapZones.Count];
+    }
+
+    public void UpdateSnap(S_Word word)
+    {
+        if (word == null || word.Word == null) return;
+
+        S_SnapZone snappedZone = null;
+        foreach (var zone in snapZones)
         {
-            GameObject zone = new GameObject($"SnapZone_{i}");
+            if (currentWords[zone.Index] == word.Word)
+            {
+                snappedZone = zone;
+                break;
+            }
+        }
 
-            zone.transform.SetParent(transform);
-            zone.transform.localRotation = Quaternion.identity;
-            zone.transform.localScale = new Vector3(_originalBoxCollider.size.x, _originalBoxCollider.size.y, _originalBoxCollider.size.z);
+        if (snappedZone != null)
+        {
+            float dist = Vector3.Distance(word.transform.position, snappedZone.transform.position);
 
-            // Trust ez Math
-            
-            float offsetX = -_originalBoxCollider.size.x / 2 + pieceSize.x / 2 + i * pieceSize.x;
+            if (dist > releaseRadius)
+            {
+                ReleaseWord(word, snappedZone);
+            }
+            else
+            {
+                Rigidbody rb = word.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    rb.linearVelocity = Vector3.zero;
+                    rb.angularVelocity = Vector3.zero;
+                }
 
-            Vector3 localPos = new Vector3(offsetX, _originalBoxCollider.center.y, _originalBoxCollider.center.z);
-            zone.transform.localPosition = localPos;
+                word.transform.position = Vector3.Lerp(word.transform.position, snappedZone.transform.position, 0.2f);
+            }
 
-            _snapPoints.Add(new Vector3(offsetX + zone.transform.localPosition.x + zone.transform.localScale.x / 2,
-                zone.transform.localPosition.y + zone.transform.localScale.y / 2,
-                zone.transform.localPosition.z + zone.transform.localScale.z / 2)); //to change for snapPoints center
+            return;
+        }
 
-            BoxCollider box = zone.AddComponent<BoxCollider>();
-            box.size = pieceSize;
-            box.isTrigger = true;
+        float minDist = float.MaxValue;
+        S_SnapZone closest = null;
+        foreach (var zone in snapZones)
+        {
+            if (zone.IsOccupied) continue;
 
-            S_SnapZone snapZone = zone.AddComponent<S_SnapZone>();
-            snapZone.Init(this, i, transform.TransformPoint(localPos));
+            float dist = Vector3.Distance(word.transform.position, zone.transform.position);
+            if (dist < minDist && dist <= snapRadius)
+            {
+                minDist = dist;
+                closest = zone;
+            }
+        }
+
+        if (closest != null)
+        {
+            word.transform.position = Vector3.Lerp(word.transform.position, closest.transform.position, 0.2f);
+
+            Rigidbody rb = word.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+            }
+
+            closest.IsOccupied = true;
+            currentWords[closest.Index] = word.Word;
+
+            CheckSentence();
         }
     }
 
-    public void Snap(int index, Transform sentence, Vector3 snapPoint)
+    private void OnDrawGizmos()
     {
-        sentence.position = snapPoint;
+        if (snapZones == null) return;
 
-        //check the sentence here
+        Gizmos.color = new Color(1f, 0f, 0f, 0.3f);
+
+        foreach (var zone in snapZones)
+        {
+            if (zone == null) continue;
+
+            Gizmos.DrawSphere(zone.transform.position, snapRadius);
+        }
+    }
+
+    private void CheckSentence()
+    {
+        for (int i = 0; i < expectedWords.Count; i++)
+        {
+            if (currentWords[i] != expectedWords[i])
+                return;
+        }
+
+        Debug.Log("Phrase correcte !");
+    }
+
+    public void ReleaseWord(S_Word word, S_SnapZone zone)
+    {
+        if (word == null || zone == null) return;
+
+        currentWords[zone.Index] = null;
+        zone.IsOccupied = false;
+
+        Rigidbody rb = word.GetComponent<Rigidbody>();
     }
 }
