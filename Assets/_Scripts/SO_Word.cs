@@ -8,7 +8,7 @@ public class SO_Word : ScriptableObject
 {
     public enum Effect
     {
-        ROCK,
+        PUSH,
         JUMP,
         CLIMB
     }
