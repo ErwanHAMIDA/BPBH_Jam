@@ -18,7 +18,9 @@ public class S_SnapSentence : MonoBehaviour
     [Range(0.001f, 4.0f)]
     [SerializeField] private float _velocityLimitOut = 0.01f;
 
+    [SerializeField] private S_SkillManager _skillManager;
     private SO_Word[] currentWords;
+
 
     private void Awake()
     {
@@ -129,6 +131,8 @@ public class S_SnapSentence : MonoBehaviour
         }
 
         Debug.Log("Phrase correcte !");
+
+        _skillManager.UnlockSkill();
     }
 
     public void ReleaseWord(S_Word word, S_SnapZone zone)

@@ -3,11 +3,17 @@ using UnityEngine;
 public class S_PushedObject : MonoBehaviour
 {
     [Range(1.0f, 100.0f)]
-    [SerializeField] float _pushForce = 1.0f;
+    [SerializeField] float _force = 1.0f;
+    [SerializeField] S_SkillManager _skill;
+
+    private float _pushForce;
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        Rigidbody rigidbody = hit.collider.attachedRigidbody;
+        if (_skill.HasPush == false) _pushForce = 2.0f;
+        else _pushForce = _force;
+
+            Rigidbody rigidbody = hit.collider.attachedRigidbody;
 
         if (rigidbody == null || rigidbody.isKinematic)
             return;
