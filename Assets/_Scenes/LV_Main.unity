@@ -129,7 +129,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 605747420397572955, guid: d32801cad7f532249b42cc1707eae27b, type: 3}
       propertyPath: m_Mass
-      value: 15
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 850298225531903891, guid: d32801cad7f532249b42cc1707eae27b, type: 3}
       propertyPath: _parentSentence
@@ -527,7 +527,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 605747420397572955, guid: d32801cad7f532249b42cc1707eae27b, type: 3}
       propertyPath: m_Mass
-      value: 15
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 850298225531903891, guid: d32801cad7f532249b42cc1707eae27b, type: 3}
       propertyPath: _word
@@ -1332,7 +1332,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 605747420397572955, guid: d32801cad7f532249b42cc1707eae27b, type: 3}
       propertyPath: m_Mass
-      value: 15
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 850298225531903891, guid: d32801cad7f532249b42cc1707eae27b, type: 3}
       propertyPath: _word
@@ -1481,7 +1481,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 605747420397572955, guid: d32801cad7f532249b42cc1707eae27b, type: 3}
       propertyPath: m_Mass
-      value: 15
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 850298225531903891, guid: d32801cad7f532249b42cc1707eae27b, type: 3}
       propertyPath: _word
@@ -5266,7 +5266,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 605747420397572955, guid: d32801cad7f532249b42cc1707eae27b, type: 3}
       propertyPath: m_Mass
-      value: 15
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 850298225531903891, guid: d32801cad7f532249b42cc1707eae27b, type: 3}
       propertyPath: _parentSentence
@@ -6485,8 +6485,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _landingPoint: {fileID: 699626938}
-  _checkDirection: 0
-  _requiredDirection: {x: 0, y: 0, z: 1}
+  _checkDirection: 1
+  _requiredDirection: {x: 1, y: 0, z: 0}
   _directionTolerance: 45
 --- !u!65 &1645273801
 BoxCollider:
@@ -7476,7 +7476,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 605747420397572955, guid: d32801cad7f532249b42cc1707eae27b, type: 3}
       propertyPath: m_Mass
-      value: 15
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 850298225531903891, guid: d32801cad7f532249b42cc1707eae27b, type: 3}
       propertyPath: _word
