@@ -58,11 +58,6 @@ public class S_Word : MonoBehaviour
     {
         if (_visual != null && _cam != null)
         {
-            //Vector3 dir = _cam.transform.position - _visual.position;
-            //dir.y = 0; // pour que le texte ne penche pas vers le bas
-            //if (dir != Vector3.zero)
-            //    _visual.rotation = Quaternion.LookRotation(dir);
-
             _visual.rotation = Quaternion.LookRotation(_cam.transform.forward);
         }
     }
