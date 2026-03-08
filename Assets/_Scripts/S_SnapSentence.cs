@@ -143,5 +143,7 @@ public class S_SnapSentence : MonoBehaviour
         zone.IsOccupied = false;
 
         Rigidbody rb = word.GetComponent<Rigidbody>();
+
+        CheckSentence();
     }
 }
