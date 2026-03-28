@@ -9,11 +9,20 @@ public class S_SkillManager : MonoBehaviour
     // Ajouter ici les futures compétences :
 
 
-    private int skillUnlocked = 0;
+    private int skillUnlocked = -1;
 
     public bool HasPush => _hasPush;
     public bool HasJump => _hasJump;
     public bool HasClimb => _hasClimb;
+
+    private void Awake()
+    {
+        _hasPush = false;
+        _hasJump = false;
+        _hasClimb = false;
+
+        Debug.Log($"[SkillManager] HasPush au démarrage = {_hasPush}");
+    }
 
     public void UnlockSkill()
     {
