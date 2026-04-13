@@ -1,3 +1,5 @@
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,7 +8,8 @@ public class UIManager : MonoBehaviour
     private bool _isMenuPanelActive = false;
     [SerializeField] private GameObject _menuPanel;
     [SerializeField] private GameObject _leftStick;
-
+    [SerializeField] private TextMeshProUGUI _spellModeText;
+    private bool _isSpellMode1 = true;
     public void ShowMenu()
     {
         _menuPanel.SetActive(true);
@@ -41,5 +44,19 @@ public class UIManager : MonoBehaviour
     public void RestartGame()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("LV_Main");
+    }
+
+    public void UpdateSpellModeText()
+    { 
+        if (_isSpellMode1)
+        {
+            _spellModeText.text = "Spell Mode: 2";
+            _isSpellMode1 = false;
+        }
+        else
+        {
+            _spellModeText.text = "Spell Mode: 1";
+            _isSpellMode1 = true;
+        }
     }
 }

@@ -12,8 +12,8 @@ public class S_PushedObject : MonoBehaviour
     {
         if (_skill == null)
             Debug.LogError("S_SkillManager is null!");
-        else
-            Debug.Log("HasPush = " + _skill.HasPush);
+        //else
+            //Debug.Log("HasPush = " + _skill.HasPush);
 
         Rigidbody rigidbody = hit.collider.attachedRigidbody;
 
